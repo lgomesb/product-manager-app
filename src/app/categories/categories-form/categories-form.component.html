@@ -1,1 +1,31 @@
-<p>categories-form works!</p>
+<h1 class="mt-4">Category</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ category.id ? 'Edit' : 'Create'}}</li>
+</ol>
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" disabled="true" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" value="{{category.name}}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <button type="submit" class="btn-success">
+                    <i class="fa fa-save"></i> Salve
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
