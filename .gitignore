@@ -2,7 +2,7 @@
 ## Angular
 HELP.md
 node_modules/
-.angular
+.angular/
 
 ### IntelliJ IDEA ###
 .idea
