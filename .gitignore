@@ -1,6 +1,8 @@
+
+## Angular
 HELP.md
 node_modules/
-!.mvn/wrapper/maven-wrapper.jar
+.angular
 
 ### IntelliJ IDEA ###
 .idea
