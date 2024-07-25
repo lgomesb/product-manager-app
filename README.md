@@ -3,10 +3,19 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.5.
 
 ## Environment Configure
-
+### Linux 
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install nodejs
 sudo npm install -g @angular/cli@15.0.x
+npm install --save jquery@3.4.x
+npm install --save bootstrap@4.3.1
+
+### Windows power-shell
+winget install Schniz.fnm
+fnm completions --shell power-shell
+fnm env --use-on-cd | Out-String | Invoke-Expression
+fnm use --install-if-missing 16
+npm install -g @angular/cli@15.0.x
 npm install --save jquery@3.4.x
 npm install --save bootstrap@4.3.1
 
