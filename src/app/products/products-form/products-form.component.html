@@ -1,1 +1,29 @@
-<p>products-form works!</p>
+<h1 class="mt-4">Product</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">{{ product.id ? 'Edit' : 'Create'}}</li>
+</ol>
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" value="{{product.id}}" disabled="true" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" value="{{product.name}}"/>
+                </div>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <button type="submit" class="btn-success">
+                    <i class="fa fa-save"></i> Salve
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

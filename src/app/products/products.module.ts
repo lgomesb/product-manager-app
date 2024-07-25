@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsFormComponent } from './products-form/products-form.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { ProductsFormComponent } from './products-form/products-form.component';
     ProductsFormComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
     ProductsRoutingModule
   ], 
