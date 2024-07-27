@@ -11,12 +11,12 @@ export class CategoriesFormComponent implements OnInit {
   category: Category = new Category;
   
   ngOnInit(): void {
-    
-    this.category.id = "1";
-    this.category.name = "Category test 1";
   
   }
 
+  onSubmit(): void {
+    console.log(this.category);
+  }
 
 
 }

@@ -2,19 +2,20 @@
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">{{ category.id ? 'Edit' : 'Create'}}</li>
 </ol>
+<span>{{category.name}}</span>
 <div class="container">
-    <form>
+    <form #categoryForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>ID:</label>
-                    <input type="text" class="form-control" value="{{category.id}}" disabled="true" />
+                    <input type="text" class="form-control" [ngModel]="category.id" name="id" disabled="true" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" class="form-control" value="{{category.name}}"/>
+                    <input type="text" class="form-control" [(ngModel)]="category.name" name="name"/>
                 </div>
             </div>            
         </div>

@@ -11,10 +11,10 @@ export class ProductsFormComponent implements OnInit{
   product: Product = new Product;
 
   ngOnInit(): void {
-    this.product.id = "1";
-    this.product.name = "Product example 1"; 
   
   }
 
-
+  onSubmit(): void {
+    console.log(this.product);
+  }
 }
