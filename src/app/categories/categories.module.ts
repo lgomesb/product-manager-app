@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
 import { FormsModule } from '@angular/forms';
+import { CategoriesListComponent } from './categories-list/categories-list.component';
 
 
 @NgModule({
   declarations: [
-    CategoriesFormComponent
+    CategoriesFormComponent,
+    CategoriesListComponent
   ],
   imports: [
     FormsModule,
@@ -16,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     CategoriesRoutingModule
   ],
   exports: [
-    CategoriesFormComponent
+    CategoriesFormComponent, 
+    CategoriesListComponent
   ]
 })
 export class CategoriesModule { }

@@ -6,6 +6,16 @@
 <div class="container">
     <form #categoryForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="success == true">
+                    Category created/updated successfully!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                    {{erro}}
+                </div>                
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>ID:</label>
@@ -20,9 +30,12 @@
             </div>            
         </div>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <button type="submit" class="btn-success">
                     <i class="fa fa-save"></i> Salve
+                </button>
+                <button type="button" class="btn btn-danger ml-1" (click)="rollbackCategoriesList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i> Voltar
                 </button>
             </div>
         </div>

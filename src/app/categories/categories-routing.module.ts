@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
+import { CategoriesListComponent } from './categories-list/categories-list.component';
 
 const routes: Routes = [
-  { path: 'categories', component: CategoriesFormComponent }
+  { path: 'categories-form', component: CategoriesFormComponent },
+  { path: 'categories-list', component: CategoriesListComponent }
 ];
 
 @NgModule({
