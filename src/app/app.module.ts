@@ -10,6 +10,9 @@ import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesService } from './categories.service';
 import { ProductsService } from './products.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { ProductsService } from './products.service';
     AppRoutingModule, 
     TemplateModule, 
     CategoriesModule,
-    ProductsModule
+    ProductsModule,
+    BrowserAnimationsModule, 
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [ 
     CategoriesService, 
