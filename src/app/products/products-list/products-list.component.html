@@ -1,4 +1,4 @@
-<h1 class="mt-4">Categories</h1>
+<h1 class="mt-4">Products</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Find</li>
 </ol>
@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-            <button class="btn btn-warning" (click)="newCategory()">
+            <button class="btn btn-warning" (click)="newProduct()">
                 <i class="fa fa-plus"></i> Create
             </button>
         </div>
@@ -23,14 +23,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let category of categories">
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
+                    <tr *ngFor="let product of products">
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
                         <td>
-                            <button class="btn btn-primary" routerLink="/customers-form/{{ category.id }}">
+                            <button class="btn btn-primary" routerLink="/products-form/{{ product.id }}">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button class="btn btn-danger" (click)="readyCategory(category)"
+                            <button class="btn btn-danger" (click)="readyProduct(product)"
                                     data-toggle="modal" 
                                     data-target="#modalDelte">
                                 <i class="fa fa-trash"></i>
@@ -47,11 +47,11 @@
                 <div class="modal-header">
                     <h4>Confirmation</h4>
                 </div>
-                <div class="modal-body" *ngIf="categorySelected">
-                    You agree to the deletion of the category <b>{{ categorySelected.name }}</b>?
+                <div class="modal-body" *ngIf="productSelected">
+                    You agree to the deletion of the product <b>{{ productSelected.name }}</b>?
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" (click)="deleteCustomer()" data-dismiss="modal">Confirma</button>
+                    <button class="btn btn-success" (click)="deleteProduct()" data-dismiss="modal">Confirma</button>
                     <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

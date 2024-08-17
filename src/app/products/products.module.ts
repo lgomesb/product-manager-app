@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsFormComponent } from './products-form/products-form.component';
 import { FormsModule } from '@angular/forms';
+import { ProductsListComponent } from './products-list/products-list.component';
 
 
 @NgModule({
   declarations: [
-    ProductsFormComponent
+    ProductsFormComponent,
+    ProductsListComponent
   ],
   imports: [
     FormsModule,

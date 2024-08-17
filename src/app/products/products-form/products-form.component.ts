@@ -4,6 +4,7 @@ import { ProductsService } from 'src/app/products.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StandardError } from 'src/app/StandardError';
 import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-form',
@@ -16,7 +17,8 @@ export class ProductsFormComponent implements OnInit{
   success: boolean = false;
   errors!: String[];
 
-  constructor(private service: ProductsService) {
+  constructor(private service: ProductsService, 
+    private router: Router) {
 
   }
 
@@ -43,5 +45,9 @@ export class ProductsFormComponent implements OnInit{
       console.error(`Backend returned code ${error.status}, body was: `, standardError);
     }
     return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  rollbackProductsList(): void {
+    this.router.navigate(['/categories-list'])
   }
 }

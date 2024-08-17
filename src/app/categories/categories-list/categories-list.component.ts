@@ -22,7 +22,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   newCategory() : void {
-    this.router.navigate(['/categories-form'])
+    this.router.navigate(['/categories-form']);
   }
 
   readyCategory(category: Category): void {
