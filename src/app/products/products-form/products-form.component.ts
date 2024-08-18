@@ -23,7 +23,7 @@ export class ProductsFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.product = this.service.getProduct();
+    
   }
 
   onSubmit(): void {

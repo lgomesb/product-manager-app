@@ -31,42 +31,19 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    // this.dataSource = new MatTableDataSource<Product>(this.products);
     this.loadProducts(0, this.pageSize);
-    //this.dataSource.paginator = this.paginator;
-    console.log("passei aqui 1");
   }
 
 
   ngAfterViewInit(): void {        
-        
-        console.log("passei aqui 2")
   }
 
 
   onPageChange(event: any) {
-    // const pageIndex = event.pageIndex;
-    // const pageSize = event.pageSize;
-    // const startIndex = (pageIndex > 0) ? pageIndex -1: pageIndex ;
-    // const endIndex = startIndex + this.products.length;
-    
     this.loadProducts(event.pageIndex, event.pageSize);
-    
-
-    //this.totalLength = this.products.length;
-    // this.dataSource.data = this.products.slice(startIndex, this.totalLength);
-    // console.log("startIndex: " + startIndex);
-    // console.log("pageIndex: " + event.pageIndex);
-    // console.log("pageSize: " + event.pageSize);
-    // console.log("length: " + event.length);
-    // console.log("length: " + this.totalLength);
-    
   }
 
   loadProducts(pageIndex: number, pageSize: number): void {
-    console.log("pageIndex: " + pageIndex);
-    console.log("pageSize: " + pageSize);
-
     this.service
       .getProductsPageable(pageIndex, pageSize)
       .subscribe((p) => {
