@@ -1,6 +1,8 @@
+import { Category } from "../categories/category";
+
 export class Product {
     public id!: string;
-    //public categoryId!: string;
+    public category!: Category;
     public name!: string; 
     // Put here the category class
     
@@ -9,5 +11,9 @@ export class Product {
         product.id = id;
         product.name = name; 
         return product;
+    }
+
+    constructor() {
+
     }
 }

@@ -20,8 +20,8 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
   productSelected!: Product;
 
   displayedColumns: string[] = ['id', 'name', 'edit'];
-  dataSource!: MatTableDataSource<Product>;
-  totalLength = this.products.length;
+  dataSource! : MatTableDataSource<Product>;
+  totalLength = 0;
   pageSize = 5;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -31,31 +31,52 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.loadProducts();
-    this.dataSource = new MatTableDataSource<Product>(this.products);
+    // this.dataSource = new MatTableDataSource<Product>(this.products);
+    this.loadProducts(0, this.pageSize);
+    //this.dataSource.paginator = this.paginator;
+    console.log("passei aqui 1");
   }
 
 
-  ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
+  ngAfterViewInit(): void {        
+        
+        console.log("passei aqui 2")
   }
 
 
   onPageChange(event: any) {
-    const pageIndex = event.pageIndex;
-    const pageSize = event.pageSize;
-    const startIndex = pageIndex * pageSize;
-    const endIndex = startIndex + this.products.length;
-    this.totalLength = this.products.length;
-    this.dataSource.data = this.products.slice(startIndex, endIndex);
-    console.log("endIndex: " + endIndex);
+    // const pageIndex = event.pageIndex;
+    // const pageSize = event.pageSize;
+    // const startIndex = (pageIndex > 0) ? pageIndex -1: pageIndex ;
+    // const endIndex = startIndex + this.products.length;
+    
+    this.loadProducts(event.pageIndex, event.pageSize);
+    
+
+    //this.totalLength = this.products.length;
+    // this.dataSource.data = this.products.slice(startIndex, this.totalLength);
+    // console.log("startIndex: " + startIndex);
+    // console.log("pageIndex: " + event.pageIndex);
+    // console.log("pageSize: " + event.pageSize);
+    // console.log("length: " + event.length);
+    // console.log("length: " + this.totalLength);
     
   }
 
-  loadProducts(): void {
+  loadProducts(pageIndex: number, pageSize: number): void {
+    console.log("pageIndex: " + pageIndex);
+    console.log("pageSize: " + pageSize);
+
     this.service
-      .getProducts()
-      .subscribe((p) => this.products = p);
+      .getProductsPageable(pageIndex, pageSize)
+      .subscribe((p) => {
+
+        this.totalLength = p.totalElements;
+        this.products = p.content;        
+        // TODO: Verficiar esse ponto
+        this.dataSource = new MatTableDataSource<Product>(this.products);
+         
+      });
   }
 
 

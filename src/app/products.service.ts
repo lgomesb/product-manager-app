@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Product } from './products/product';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ProductPageable } from './products/product-pageable';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,19 @@ export class ProductsService {
 
   getProductById( id: String ) : Observable<any> {
     return this.http.get<any>(`${this.DEFAULT_ENDPOINT}/${id}`);  
+  }
+  
+  getProductsPageable(page: number, pageSize: number) : Observable<ProductPageable> {
+    const params = {
+      page: page.toString(),
+      linesPerPage: pageSize.toString()
+    };
+
+    const url = `${this.DEFAULT_ENDPOINT}?page=${params.page}&linesPerPage=${params.linesPerPage}`;
+    // console.log(url);
+
+
+    return this.http.get<ProductPageable>(url);  
   }
   
   getProduct() : Product {
