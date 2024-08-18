@@ -4,6 +4,7 @@
 </ol>
 
 <div class="container">
+    
     <div class="row">
         <div class="col-md-2">
             <button class="btn btn-warning" (click)="newProduct()">
@@ -12,6 +13,7 @@
         </div>
     </div>
     <br />    
+    <!--
     <div class="row">
         <div class="col-md-12">
             <table class="table table-condensed table-hover">
@@ -41,6 +43,58 @@
             </table>
         </div>
     </div>
+-->
+
+<div class="row">
+    <div class="col-md-12">
+        <table mat-table [dataSource]="dataSource" class="table table-condensed table-hover">
+      
+            <!-- Defina suas colunas aqui -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> ID </th>
+              <td mat-cell *matCellDef="let product"> {{product.id}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                <td mat-cell *matCellDef="let product">
+                    <button class="btn btn-primary" routerLink="/products-form/{{ product.id }}">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="readyProduct(product)"
+                            data-toggle="modal" 
+                            data-target="#modalDelte">
+                        <i class="fa fa-trash"></i>
+                    </button>                   
+                </td>
+              </ng-container>            
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+<!--         <mat-paginator 
+            [length]="totalLength" 
+            [pageSize]="pageSize" 
+            [pageSizeOptions]="[5, 10, 20]" 
+            (page)="onPageChange($event)">
+        </mat-paginator> -->
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+            [length]="totalLength" 
+            [pageSize]="pageSize" 
+            showFirstLastButtons
+            (page)="onPageChange($event)"
+            >
+        </mat-paginator>
+    </div>
+</div>
+
     <div id="modalDelte" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -57,4 +111,9 @@
             </div>
         </div>
     </div>
+
+
+    
 </div>
+
+

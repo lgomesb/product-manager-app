@@ -5,6 +5,9 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsFormComponent } from './products-form/products-form.component';
 import { FormsModule } from '@angular/forms';
 import { ProductsListComponent } from './products-list/products-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+
 
 
 @NgModule({
@@ -15,7 +18,9 @@ import { ProductsListComponent } from './products-list/products-list.component';
   imports: [
     FormsModule,
     CommonModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    MatPaginatorModule, 
+    MatTableModule
   ], 
   exports: [
     ProductsFormComponent
