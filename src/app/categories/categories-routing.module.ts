@@ -5,6 +5,7 @@ import { CategoriesListComponent } from './categories-list/categories-list.compo
 
 const routes: Routes = [
   { path: 'categories-form', component: CategoriesFormComponent },
+  { path: 'categories-form/:id', component: CategoriesFormComponent },
   { path: 'categories-list', component: CategoriesListComponent }
 ];
 

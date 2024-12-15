@@ -3,6 +3,7 @@ import { Product } from './products/product';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ProductPageable } from './products/product-pageable';
+import { ProductDTO } from './products/productDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,9 @@ export class ProductsService {
   
   constructor( private http: HttpClient ) { }
   
-  salve( category : Product ) : Observable<any> {
-    return this.http.post(`${this.DEFAULT_ENDPOINT}`, category);
+  salve( product : ProductDTO ) : Observable<any> {
+    console.info(product);
+    return this.http.post(`${this.DEFAULT_ENDPOINT}`, product);
   }
 
   getProductById( id: String ) : Observable<any> {

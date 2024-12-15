@@ -19,7 +19,7 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
   products: Product[] = [];
   productSelected!: Product;
 
-  displayedColumns: string[] = ['id', 'name', 'edit'];
+  displayedColumns: string[] = ['name', 'category', 'edit'];
   dataSource! : MatTableDataSource<Product>;
   totalLength = 0;
   pageSize = 5;

@@ -5,6 +5,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { StandardError } from 'src/app/StandardError';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { Category } from 'src/app/categories/category';
+import { CategoriesService } from 'src/app/categories.service';
+import { ProductDTO } from '../productDTO';
 
 @Component({
   selector: 'app-products-form',
@@ -14,27 +17,47 @@ import { Router } from '@angular/router';
 export class ProductsFormComponent implements OnInit{
   
   product: Product = new Product;
+  productDTO: ProductDTO = new ProductDTO;
+  categories: Category[] = [];
   success: boolean = false;
   errors!: String[];
+  cat01: Category = new Category();
+  selectCategory: String = "";
 
   constructor(private service: ProductsService, 
+    private categoriesService: CategoriesService, 
     private router: Router) {
 
   }
 
   ngOnInit(): void {
-    
+    this.loadCategories();
+  }
+
+  onCategoryChange(selectedCategory: Category) {
+    this.product.category = selectedCategory;
+    // console.log(selectedCategory);
+
   }
 
   onSubmit(): void {
-    this.service.salve(this.product)
-    .subscribe({
-      next: (v) => console.log(v),
-      error: (e) => {this.success = false; this.handleError(e)},
-      complete: () => {this.success = true; this.errors = []} 
-    } );  
+    console.log(this.product)
+    this.productDTO = ProductDTO.create(this.product.id, this.product.name, this.product.category.id);
+
+    this.service.salve(this.productDTO)
+      .subscribe({
+        next: (v) => console.log(v),
+        error: (e) => {this.success = false; this.handleError(e)},
+        complete: () => {this.success = true; this.errors = []} 
+      } );  
   }
 
+  loadCategories(): void {
+    this.categoriesService
+      .getCategories()
+      .subscribe((c) => this.categories = c);
+
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -48,6 +71,6 @@ export class ProductsFormComponent implements OnInit{
   }
 
   rollbackProductsList(): void {
-    this.router.navigate(['/categories-list'])
+    this.router.navigate(['/products-list'])
   }
 }

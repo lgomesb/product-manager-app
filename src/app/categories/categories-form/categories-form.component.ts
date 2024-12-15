@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../category';
 import { CategoriesService } from 'src/app/categories.service';
-import { observable, throwError } from 'rxjs';
+import { Observable, observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StandardError } from 'src/app/StandardError';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 
 @Component({
@@ -20,13 +20,28 @@ export class CategoriesFormComponent implements OnInit {
   
   constructor( 
     private service: CategoriesService, 
-    private router: Router ) {    
+    private router: Router, 
+    private activateRoute: ActivatedRoute ) {    
   }
 
-  ngOnInit(): void {      
-    // this.service
-    // .getCategoryById("26dd8bcc-aaba-486d-827a-8ce5933432c0")
-    // .subscribe((c) => this.category = c );
+  ngOnInit(): void {
+    let params: Observable<Params> = this.activateRoute.params;
+
+    params.subscribe(urlParams => {
+      if(urlParams['id']) {
+        this.service
+        .getCategoryById(urlParams['id'])
+        .subscribe({
+          next: (c) => this.category = c,
+          error: (e) => {this.success = false; this.handleError(e)},
+          complete: () => {this.success = false; this.errors = []}
+        });
+      }
+    })
+
+    // .subscribe((c) => this.category = c, 
+        //  errorResponse => {this.success = false; this.errors = errorResponse.error.errors} );
+
   }
 
   onSubmit(): void {

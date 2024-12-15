@@ -11,19 +11,33 @@
                     <input type="text" class="form-control" [ngModel]="product.id" name="id" disabled="true" />
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Name:</label>
                     <input type="text" class="form-control" [(ngModel)]="product.name" name="name"/>
                 </div>
             </div>            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Category:</label>
+                    <select class="form-control" name="categories" [(ngModel)]="selectCategory" (ngModelChange)="onCategoryChange($event)" >
+                        <option *ngFor="let category of categories" [ngValue]="category" name="category">{{ category.name }}</option>
+                      </select>
+                </div>
+            </div>     
         </div>
+
         <div class="row">
-            <div class="col-md-2">
-                <button type="submit" class="btn-success">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success">
                     <i class="fa fa-save"></i> Salve
                 </button>
-            </div>
+                <button type="button" class="btn btn-danger ml-1" (click)="rollbackProductsList()">
+                    <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+                </button>
+            </div>  
         </div>
     </form>
 </div>
