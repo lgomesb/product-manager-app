@@ -3,8 +3,8 @@ import { Product } from '../product';
 import { ProductsService } from 'src/app/products.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StandardError } from 'src/app/StandardError';
-import { throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from 'src/app/categories/category';
 import { CategoriesService } from 'src/app/categories.service';
 import { ProductDTO } from '../productDTO';
@@ -22,17 +22,40 @@ export class ProductsFormComponent implements OnInit{
   success: boolean = false;
   errors!: String[];
   cat01: Category = new Category();
-  selectCategory: String = "";
+
 
   constructor(private service: ProductsService, 
     private categoriesService: CategoriesService, 
-    private router: Router) {
+    private router: Router, 
+    private activateRoute: ActivatedRoute ) {
 
   }
 
   ngOnInit(): void {
     this.loadCategories();
+    let params: Observable<Params> = this.activateRoute.params;
+
+    params.subscribe(urlParams => {
+      if(urlParams['id']) {
+        this.service
+        .getProductById(urlParams['id'])
+        .subscribe({
+          next: (p) => {this.product = p; this.selectCategory(this.product.category.id)},
+          error: (e) => {this.success = false; this.handleError(e)},
+          complete: () => {this.success = false; this.errors = []}
+        });
+      }
+
+    })
+
   }
+
+  selectCategory(categoryId: string) {
+    const selectedCategory = this.categories.find(cat => cat.id === categoryId);
+    if (selectedCategory) {
+      this.product.category = selectedCategory;
+    }
+  }  
 
   onCategoryChange(selectedCategory: Category) {
     this.product.category = selectedCategory;

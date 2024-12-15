@@ -22,8 +22,12 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Category:</label>
-                    <select class="form-control" name="categories" [(ngModel)]="selectCategory" (ngModelChange)="onCategoryChange($event)" >
-                        <option *ngFor="let category of categories" [ngValue]="category" name="category">{{ category.name }}</option>
+                    <select class="form-control" name="categories" [(ngModel)]="product.category" 
+                        (ngModelChange)="onCategoryChange($event)" >
+
+                        <option *ngFor="let category of categories" 
+                            [ngValue]="category" name="category">{{ category.name }}</option>
+
                       </select>
                 </div>
             </div>     
