@@ -26,11 +26,18 @@ export class CategoriesListComponent implements OnInit {
   }
 
   readyCategory(category: Category): void {
-
+    this.categorySelected = category;
   }
 
-  deleteCustomer(): void {
-    
+  deleteCategory(): void {
+    this.service
+      .delete(this.categorySelected.id)
+      .subscribe(
+        {
+          error: (e) => {console.error(e)}, 
+          complete: () => {this.loadCategories()}         
+        } 
+      );
   }
 
   loadCategories(): void {

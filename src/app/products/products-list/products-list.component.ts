@@ -31,11 +31,23 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+
     this.loadProducts(0, this.pageSize);
+
   }
 
+  ngAfterViewInit(): void {
+    
+  }
 
-  ngAfterViewInit(): void {        
+  refreshPaginator() { 
+    this.dataSource = new MatTableDataSource<Product>([]);
+    this.loadProducts(0, this.pageSize);
+
+    if(this.paginator) {
+      this.paginator._changePageSize(this.paginator.pageSize);
+    }
+
   }
 
 
@@ -44,7 +56,7 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
   }
 
   loadProducts(pageIndex: number, pageSize: number): void {
-    this.service
+      this.service
       .getProductsPageable(pageIndex, pageSize)
       .subscribe((p) => {
 
@@ -52,7 +64,7 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
         this.products = p.content;        
         // TODO: Verficiar esse ponto
         this.dataSource = new MatTableDataSource<Product>(this.products);
-         
+        
       });
   }
 
@@ -62,11 +74,18 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
   }
 
   readyProduct(product: Product): void {
-
+    this.productSelected = product;
   }
 
   deleteProduct(): void {
-    
+    this.service
+    .delete(this.productSelected.id)
+    .subscribe(
+      {
+        error: (e) => {console.error(e)}, 
+        complete: () => {this.refreshPaginator()}         
+      } 
+    );
   }
 
 }

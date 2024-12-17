@@ -21,6 +21,15 @@ export class ProductsService {
     return this.http.post(`${this.DEFAULT_ENDPOINT}`, product);
   }
 
+  update( id: String, product : ProductDTO ) : Observable<any> {
+    console.info(product);
+    return this.http.put(`${this.DEFAULT_ENDPOINT}/${id}`, product);
+  }
+
+  delete( id: String ) : Observable<any> {
+    return this.http.delete<any>(`${this.DEFAULT_ENDPOINT}/${id}`);  
+  }
+
   getProductById( id: String ) : Observable<any> {
     return this.http.get<any>(`${this.DEFAULT_ENDPOINT}/${id}`);  
   }
@@ -32,8 +41,6 @@ export class ProductsService {
     };
 
     const url = `${this.DEFAULT_ENDPOINT}?page=${params.page}&linesPerPage=${params.linesPerPage}`;
-    // console.log(url);
-
 
     return this.http.get<ProductPageable>(url);  
   }

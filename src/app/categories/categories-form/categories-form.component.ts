@@ -25,32 +25,52 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let params: Observable<Params> = this.activateRoute.params;
+    let categoryId = this.lookupRouteParameter();
 
-    params.subscribe(urlParams => {
-      if(urlParams['id']) {
-        this.service
-        .getCategoryById(urlParams['id'])
-        .subscribe({
-          next: (c) => this.category = c,
-          error: (e) => {this.success = false; this.handleError(e)},
-          complete: () => {this.success = false; this.errors = []}
-        });
-      }
-    })
-
+    if(categoryId) {
+      this.service
+      .getCategoryById(categoryId)
+      .subscribe({
+        next: (c) => this.category = c,
+        error: (e) => {this.success = false; this.handleError(e)},
+        complete: () => {this.success = false; this.errors = []}
+      });
+    }
     // .subscribe((c) => this.category = c, 
         //  errorResponse => {this.success = false; this.errors = errorResponse.error.errors} );
 
   }
 
+  lookupRouteParameter() : string {
+    let params: Observable<Params> = this.activateRoute.params;
+    let result!: string;
+
+    params.subscribe(urlParams => {
+      result = urlParams['id']; 
+    });
+
+    return result;
+  }
+
   onSubmit(): void {
-    this.service.salve(this.category)
-    .subscribe({
-      next: (v) => console.log(v),
-      error: (e) => {this.success = false; this.handleError(e)},
-      complete: () => {this.success = true; this.errors = []} 
-    } );    
+    let categoryId = this.lookupRouteParameter();
+
+    if(categoryId) { // Is it new or edit
+      this.service.update(categoryId, this.category)
+      .subscribe({
+        next: (v) => console.log(v),
+        error: (e) => {this.success = false; this.handleError(e)},
+        complete: () => {this.success = true; this.errors = []} 
+      } );
+    } else {
+      this.service.salve(this.category)
+      .subscribe({
+        next: (v) => console.log(v),
+        error: (e) => {this.success = false; this.handleError(e)},
+        complete: () => {this.success = true; this.errors = []} 
+      } );
+    }
+    
   }
 
   private handleError(error: HttpErrorResponse) {

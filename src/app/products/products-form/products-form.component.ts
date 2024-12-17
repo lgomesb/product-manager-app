@@ -33,21 +33,29 @@ export class ProductsFormComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadCategories();
+    let productId = this.lookupRouteParameter();
+    
+    if(productId) {
+      this.service
+      .getProductById(productId)
+      .subscribe({
+        next: (p) => {this.product = p; this.selectCategory(this.product.category.id)},
+        error: (e) => {this.success = false; this.handleError(e)},
+        complete: () => {this.success = false; this.errors = []}
+      });
+    }
+
+  }
+
+  lookupRouteParameter() : string {
     let params: Observable<Params> = this.activateRoute.params;
+    let result!: string;
 
     params.subscribe(urlParams => {
-      if(urlParams['id']) {
-        this.service
-        .getProductById(urlParams['id'])
-        .subscribe({
-          next: (p) => {this.product = p; this.selectCategory(this.product.category.id)},
-          error: (e) => {this.success = false; this.handleError(e)},
-          complete: () => {this.success = false; this.errors = []}
-        });
-      }
+      result = urlParams['id']; 
+    });
 
-    })
-
+    return result;
   }
 
   selectCategory(categoryId: string) {
@@ -59,22 +67,33 @@ export class ProductsFormComponent implements OnInit{
 
   onCategoryChange(selectedCategory: Category) {
     this.product.category = selectedCategory;
-    // console.log(selectedCategory);
-
   }
 
   onSubmit(): void {
     console.log(this.product)
+    let productId = this.lookupRouteParameter();
     this.productDTO = ProductDTO.create(this.product.id, this.product.name, this.product.category.id);
 
-    this.service.salve(this.productDTO)
-      .subscribe({
-        next: (v) => console.log(v),
-        error: (e) => {this.success = false; this.handleError(e)},
-        complete: () => {this.success = true; this.errors = []} 
-      } );  
+    if(productId) {
+      this.service.update(productId, this.productDTO)
+        .subscribe({
+          next: (v) => console.log(v),
+          error: (e) => {this.success = false; this.handleError(e)},
+          complete: () => {this.success = true; this.errors = []} 
+        } ); 
+    } else {
+      this.service.salve(this.productDTO)
+        .subscribe({
+          next: (v) => console.log(v),
+          error: (e) => {this.success = false; this.handleError(e)},
+          complete: () => {this.success = true; this.errors = []} 
+        } );  
+    }
+
+
   }
 
+  
   loadCategories(): void {
     this.categoriesService
       .getCategories()
