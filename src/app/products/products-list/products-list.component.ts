@@ -31,16 +31,14 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-
-    this.loadProducts(0, this.pageSize);
-
+    this.loadAndRealoadDataSource();
   }
 
   ngAfterViewInit(): void {
-    
+
   }
 
-  refreshPaginator() { 
+  loadAndRealoadDataSource() { 
     this.dataSource = new MatTableDataSource<Product>([]);
     this.loadProducts(0, this.pageSize);
 
@@ -83,7 +81,7 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     .subscribe(
       {
         error: (e) => {console.error(e)}, 
-        complete: () => {this.refreshPaginator()}         
+        complete: () => {this.loadAndRealoadDataSource()}         
       } 
     );
   }
