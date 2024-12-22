@@ -14,31 +14,42 @@
     <br />    
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let category of categories">
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
-                        <td>
-                            <button class="btn btn-primary" routerLink="/categories-form/{{ category.id }}">
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger" (click)="readyCategory(category)"
-                                    data-toggle="modal" 
-                                    data-target="#modalDelte">
-                                <i class="fa fa-trash"></i>
-                            </button>                            
-                        </td>
-                    </tr>
-                </tbody>
+            <table mat-table [dataSource]="dataSource" class="table table-condensed table-hover">
+        
+                <ng-container matColumnDef="id" hidden="true">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let category"> {{category.id}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let category"> {{category.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="edit" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let category">
+                        <button class="btn btn-primary" routerLink="/categories-form/{{ category.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" (click)="readyCategory(category)"
+                                data-toggle="modal" 
+                                data-target="#modalDelte">
+                            <i class="fa fa-trash"></i>
+                        </button>                   
+                    </td>
+                </ng-container>            
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                [length]="totalLength"
+                [pageSize]="pageSize" 
+                showFirstLastButtons            
+                (page)="onPageChange($event)">
+            </mat-paginator>            
         </div>
     </div>
     <div id="modalDelte" class="modal fade" role="dialog">

@@ -5,6 +5,8 @@ import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
 import { FormsModule } from '@angular/forms';
 import { CategoriesListComponent } from './categories-list/categories-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { CategoriesListComponent } from './categories-list/categories-list.compo
   imports: [
     FormsModule,
     CommonModule,
-    CategoriesRoutingModule
+    CategoriesRoutingModule,
+    MatPaginatorModule, 
+    MatTableModule
   ],
   exports: [
     CategoriesFormComponent, 
