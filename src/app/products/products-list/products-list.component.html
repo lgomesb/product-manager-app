@@ -4,28 +4,37 @@
 </ol>
 
 <div class="container">
-    
+
     <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                {{erro}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showErrorModal">
         <div class="col-md-2">
             <button class="btn btn-warning" (click)="newProduct()">
                 <i class="fa fa-plus"></i> Create
             </button>
         </div>
     </div>
-    <br />    
 
-    <div class="row">
+    <br />
+
+    <div class="row" *ngIf="!showErrorModal">
         <div class="col-md-12">
             <table mat-table [dataSource]="dataSource" class="table table-condensed table-hover">
-        
+
                 <ng-container matColumnDef="id" hidden="true">
-                <th mat-header-cell *matHeaderCellDef> ID </th>
-                <td mat-cell *matCellDef="let product"> {{product.id}} </td>
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let product"> {{product.id}} </td>
                 </ng-container>
-            
+
                 <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let product"> {{product.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="category">
@@ -39,23 +48,19 @@
                         <button class="btn btn-primary" routerLink="/products-form/{{ product.id }}">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button class="btn btn-danger" (click)="readyProduct(product)"
-                                data-toggle="modal" 
-                                data-target="#modalDelte">
+                        <button class="btn btn-danger" (click)="readyProduct(product)" data-toggle="modal"
+                            data-target="#modalDelte">
                             <i class="fa fa-trash"></i>
-                        </button>                   
+                        </button>
                     </td>
-                </ng-container>            
+                </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                [length]="totalLength"
-                [pageSize]="pageSize" 
-                showFirstLastButtons            
-                (page)="onPageChange($event)">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalLength" [pageSize]="pageSize"
+                showFirstLastButtons (page)="onPageChange($event)">
             </mat-paginator>
         </div>
     </div>
@@ -78,7 +83,23 @@
     </div>
 
 
-    
+    <div class="modal" id="modalError" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Error</h4>
+                </div>
+                <div class="modal-body" *ngIf="showErrorModal">
+                    <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                        {{erro}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
-
-

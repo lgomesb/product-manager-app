@@ -4,10 +4,12 @@ import { ProductsService } from 'src/app/products.service';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { ErrorUtils } from 'src/app/utils/error-util';
+import { ProductPageable } from '../product-pageable';
 
-
-
-
+declare var bootstrap: any; 
 
 @Component({
   selector: 'app-products-list',
@@ -23,6 +25,9 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
   dataSource! : MatTableDataSource<Product>;
   totalLength = 0;
   pageSize = 5;
+  errors!: String[];
+  showErrorModal!: boolean;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -31,11 +36,10 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.loadAndReloadDataSource();
+    this.loadAndReloadDataSource();   
   }
 
-  ngAfterViewInit(): void {
-
+  ngAfterViewInit(): void {    
   }
 
   loadAndReloadDataSource() { 
@@ -55,13 +59,10 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
   loadProducts(pageIndex: number, pageSize: number): void {
       this.service
       .getProductsPageable(pageIndex, pageSize)
-      .subscribe((p) => {
-
-        this.totalLength = p.totalElements;
-        this.products = p.content;        
-        // TODO: Verficiar esse ponto
-        this.dataSource = new MatTableDataSource<Product>(this.products);
-        
+      .subscribe({
+        next: (p) => this.processProductPageable(p),
+        error: (e) => {this.handleError(e, "Error occurred when retrieving products.");}, 
+        complete: () => {this.errors = []; this.showErrorModal = false}
       });
   }
 
@@ -79,10 +80,38 @@ export class ProductsListComponent implements AfterViewInit, OnInit {
     .delete(this.productSelected.id)
     .subscribe(
       {
-        error: (e) => {console.error(e)}, 
+        error: (e) => {this.handleError(e, "Error occurred when deleting the product.")}, 
         complete: () => {this.loadAndReloadDataSource()}         
       } 
     );
   }
+
+  showModal() : void {
+    const modelElement = document.getElementById("modalError");
+    console.info(`Passei aqui: ShowModal ${this.showErrorModal}`);
+
+    if(modelElement) {
+      const model = new bootstrap.Modal(modelElement);
+      model.show();
+    }
+  }
+
+  closeModal(): void {
+    this.showErrorModal = false;
+  }
+
+  private processProductPageable(productPageable: ProductPageable) {
+    this.totalLength = productPageable.totalElements;
+    this.products = productPageable.content;
+    this.dataSource = new MatTableDataSource<Product>(this.products); 
+  }
+
+  private handleError(error: HttpErrorResponse, customMessage: string) {
+    this.showErrorModal = true;    
+    this.showModal();
+    this.errors = ErrorUtils.handleError(error, customMessage);
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
 
 }

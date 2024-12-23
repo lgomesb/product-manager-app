@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ProductsService } from 'src/app/products.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { StandardError } from 'src/app/StandardError';
+import { StandardError } from 'src/app/standard-error';
 import { Observable, throwError } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from 'src/app/categories/category';

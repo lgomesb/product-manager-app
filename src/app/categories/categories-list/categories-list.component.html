@@ -4,15 +4,25 @@
 </ol>
 
 <div class="container">
+
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                {{erro}}
+            </div>                
+        </div>
+    </div> 
+        
+    <div class="row">
+        <div class="col-md-2" *ngIf="!showErrorModal">
             <button class="btn btn-warning" (click)="newCategory()">
                 <i class="fa fa-plus"></i> Create
             </button>
         </div>
     </div>
     <br />    
-    <div class="row">
+
+    <div class="row" *ngIf="!showErrorModal">
         <div class="col-md-12">
             <table mat-table [dataSource]="dataSource" class="table table-condensed table-hover">
         
@@ -68,4 +78,23 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="modalError" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Error</h4>
+                </div>
+                <div class="modal-body" *ngIf="showErrorModal">
+                    <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                        {{erro}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

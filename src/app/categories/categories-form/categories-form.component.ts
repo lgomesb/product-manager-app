@@ -3,7 +3,7 @@ import { Category } from '../category';
 import { CategoriesService } from 'src/app/categories.service';
 import { Observable, observable, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { StandardError } from 'src/app/StandardError';
+import { StandardError } from 'src/app/standard-error';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 
