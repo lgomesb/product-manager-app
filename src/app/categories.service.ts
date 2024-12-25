@@ -3,14 +3,15 @@ import { Category } from './categories/category';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CategoryPageable } from './categories/category-pageable';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
 
-  private HOST: String = "http://localhost:8082";
-  private DEFAULT_ENDPOINT: String = `${this.HOST}/product-mgmt/category`;
+  private API_URL: String = environment.productApiURL;
+  private DEFAULT_ENDPOINT: String = `${this.API_URL}/category`;
 
   constructor( private http: HttpClient ) { }
 

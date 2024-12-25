@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ProductPageable } from './products/product-pageable';
 import { ProductDTO } from './products/productDTO';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ import { ProductDTO } from './products/productDTO';
 export class ProductsService {
 
   
-  private HOST: String = "http://localhost:8082";
-  private DEFAULT_ENDPOINT: String = `${this.HOST}/product-mgmt/product`;
+  private API_URL: String = environment.productApiURL;
+  private DEFAULT_ENDPOINT: String = `${this.API_URL}/product`;
   
   constructor( private http: HttpClient ) { }
   
