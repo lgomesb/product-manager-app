@@ -13,6 +13,8 @@ import { ProductsService } from './products.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { OrdersService } from './orders.service';
+import { OrdersModule } from './orders/orders.module';
 
 
 @NgModule({
@@ -27,13 +29,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     TemplateModule, 
     CategoriesModule,
     ProductsModule,
+    OrdersModule,
     BrowserAnimationsModule, 
     MatTableModule,
     MatPaginatorModule
   ],
   providers: [ 
     CategoriesService, 
-    ProductsService
+    ProductsService, 
+    OrdersService
   ],
   bootstrap: [AppComponent]
 })
