@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersListComponent } from './orders-list/orders-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -10,9 +15,14 @@ import { OrdersListComponent } from './orders-list/orders-list.component';
     OrdersListComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
-    OrdersRoutingModule
-  ], 
+    OrdersRoutingModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatIconModule, 
+    MatButtonModule
+  ],
   exports: [
     OrdersListComponent
   ]

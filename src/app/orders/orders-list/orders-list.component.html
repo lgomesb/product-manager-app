@@ -1,1 +1,145 @@
-<p>orders-list works!</p>
+<h1 class="mt-4">Orders</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Find</li>
+</ol>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                {{erro}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showErrorModal">
+        <div class="col-md-2">
+            <button class="btn btn-warning" (click)="newOrder()">
+                <i class="fa fa-plus"></i> Create
+            </button>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row" *ngIf="!showErrorModal">
+        <div class="col-md-12">
+            <!-- order-table.component.html -->
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows >
+
+                <!-- ID -->
+                <ng-container matColumnDef="id" hidden="false">
+                    <th mat-header-cell *matHeaderCellDef> Ordem </th>
+                    <td mat-cell *matCellDef="let order"> {{order.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                    <td mat-cell *matCellDef="let order"> {{order.description}} </td>
+                </ng-container>
+
+                <!-- Ações -->
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let order">
+                    <button mat-icon-button (click)="expandedOrder = expandedOrder === order ? null : order">
+                        <mat-icon>{{ expandedOrder === order ? 'expand_less' : 'expand_more' }}</mat-icon>
+                    </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="edit" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let order">
+                        <button class="btn btn-primary" routerLink="/orders-form/{{ order.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" (click)="readyOrder(order)" data-toggle="modal"
+                            data-target="#modalDelte">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Linha de detalhes -->
+                <ng-container matColumnDef="detail">
+                    <td mat-cell *matCellDef="let order" [attr.colspan]="displayedColumns.length">
+                        <div *ngIf="expandedOrder === order">
+                        <table mat-table [dataSource]="order.items">
+                            <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> ID Produto </th>
+                            <td mat-cell *matCellDef="let produto">{{ produto.productId }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="quantidade">
+                            <th mat-header-cell *matHeaderCellDef> Qtd </th>
+                            <td mat-cell *matCellDef="let produto">{{ produto.quantity }}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="['id', 'quantidade']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['id', 'quantidade']"></tr>
+                        </table>
+                        </div>
+                    </td>
+                </ng-container>
+
+
+                <!-- Cabeçalho -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                <!-- Linhas principais -->
+                <tr mat-row *matRowDef="let order; columns: displayedColumns"></tr>
+
+                <!-- Linha de detalhe -->
+                <tr mat-row *matRowDef="let order; columns: ['detail']" [hidden]="expandedOrder !== order"></tr>
+
+
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalLength" [pageSize]="pageSize"
+                showFirstLastButtons (page)="onPageChange($event)">
+            </mat-paginator>
+
+
+        </div>
+    </div>
+
+    <div id="modalDelte" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmation</h4>
+                </div>
+                <div class="modal-body" *ngIf="orderSelected">
+                    You agree to the deletion of the order <b>{{ orderSelected.description }}</b>?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="deleteOrder()" data-dismiss="modal">Confirma</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="modalError" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Error</h4>
+                </div>
+                <div class="modal-body" *ngIf="showErrorModal">
+                    <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                        {{erro}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
