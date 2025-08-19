@@ -15,6 +15,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { OrdersService } from './orders.service';
 import { OrdersModule } from './orders/orders.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -32,7 +35,10 @@ import { OrdersModule } from './orders/orders.module';
     OrdersModule,
     BrowserAnimationsModule, 
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule, 
+    MatDialogModule, 
+    MatFormFieldModule, 
+    MatInputModule
   ],
   providers: [ 
     CategoriesService, 

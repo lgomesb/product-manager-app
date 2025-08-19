@@ -11,9 +11,9 @@
                 </div>
                 <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
                     {{erro}}
-                </div>                
+                </div>
             </div>
-        </div>        
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -26,12 +26,21 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" class="form-control" [(ngModel)]="product.name" name="name"/>
+                    <input type="text" class="form-control" [(ngModel)]="product.name" name="name" />
                 </div>
-            </div>            
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Category:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" [ngModel]="product.category? product.category.name : ''"
+                            name="categoryName" disabled="true" />
+                        <button type="button" class="btn btn-secondary" (click)="openSearchDialog()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- <div class="form-group">
+
                     <select class="form-control" name="categories" [(ngModel)]="product.category" 
                         (ngModelChange)="onCategoryChange($event)" >
 
@@ -39,8 +48,10 @@
                             [ngValue]="category" name="category">{{ category.name }}</option>
 
                       </select>
+
+                </div> -->
                 </div>
-            </div>     
+            </div>
         </div>
 
         <div class="row">
@@ -49,9 +60,9 @@
                     <i class="fa fa-save"></i> Salve
                 </button>
                 <button type="button" class="btn btn-danger ml-1" (click)="rollbackProductsList()">
-                    <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+                    <i class="fa fa-arrow-alt-circle-left"></i> Back
                 </button>
-            </div>  
+            </div>
         </div>
     </form>
 </div>

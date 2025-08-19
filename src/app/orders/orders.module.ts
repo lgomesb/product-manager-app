@@ -8,11 +8,16 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { OrdersDialogComponent } from './orders-dialog/orders-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { OrdersFormComponent } from './orders-form/orders-form.component';
 
 
 @NgModule({
   declarations: [
-    OrdersListComponent
+    OrdersListComponent,
+    OrdersDialogComponent,
+    OrdersFormComponent
   ],
   imports: [
     FormsModule,
@@ -21,7 +26,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatTableModule,
     MatIconModule, 
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   exports: [
     OrdersListComponent

@@ -8,6 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { ErrorUtils } from 'src/app/utils/error-util';
 import { OrderPageable } from '../order-pageable';
+import { MatDialog } from '@angular/material/dialog';
+import { OrdersDialogComponent } from '../orders-dialog/orders-dialog.component';
 
 declare var bootstrap: any; 
 
@@ -21,7 +23,7 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
   orders: Order[] = [];
   orderSelected!: Order;
 
-  displayedColumns: string[] = ['description', 'actions',  'edit'];
+  displayedColumns: string[] = ['description', 'actions', 'edit'];
   dataSource! : MatTableDataSource<Order>;
   totalLength = 0;
   pageSize = 5;
@@ -32,6 +34,7 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private dialog: MatDialog,
     private service: OrdersService,
     private router: Router) { }
 
@@ -39,7 +42,15 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
     this.loadAndReloadDataSource();   
   }
 
+  toggle(element: Order) {
+    this.expandedOrder = this.isExpanded(element) ? null : element;
+  }
+
   ngAfterViewInit(): void {    
+  }
+
+  isExpanded(element: Order): boolean {
+    return this.expandedOrder === element;
   }
 
   loadAndReloadDataSource() { 
@@ -121,6 +132,14 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
     this.errors = ErrorUtils.handleError(error, customMessage);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+  onRowClick(order: Order): void {
+    this.dialog.open(OrdersDialogComponent, {
+      width: '400px',
+      data: order
+    } );
+  }
+
 
 
 }

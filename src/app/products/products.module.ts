@@ -7,20 +7,26 @@ import { FormsModule } from '@angular/forms';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { FindCategoriesDialogComponent } from './products-form/find-categories-dialog/find-categories-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
 @NgModule({
   declarations: [
     ProductsFormComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    FindCategoriesDialogComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
     ProductsRoutingModule,
     MatPaginatorModule, 
-    MatTableModule
+    MatTableModule, 
+    MatFormFieldModule,
+    MatInputModule
   ], 
   exports: [
     ProductsFormComponent

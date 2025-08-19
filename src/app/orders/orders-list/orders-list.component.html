@@ -26,7 +26,7 @@
     <div class="row" *ngIf="!showErrorModal">
         <div class="col-md-12">
             <!-- order-table.component.html -->
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows >
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows  class="demo-table">
 
                 <!-- ID -->
                 <ng-container matColumnDef="id" hidden="false">
@@ -66,7 +66,7 @@
                 <!-- Linha de detalhes -->
                 <ng-container matColumnDef="detail">
                     <td mat-cell *matCellDef="let order" [attr.colspan]="displayedColumns.length">
-                        <div *ngIf="expandedOrder === order">
+                        <div class="example-element-detail-wrapper" [class.example-element-detail-wrapper-expanded]="isExpanded(order)" *ngIf="expandedOrder === order">
                         <table mat-table [dataSource]="order.items">
                             <ng-container matColumnDef="id">
                             <th mat-header-cell *matHeaderCellDef> ID Produto </th>
@@ -89,7 +89,11 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
                 <!-- Linhas principais -->
-                <tr mat-row *matRowDef="let order; columns: displayedColumns"></tr>
+                <tr mat-row *matRowDef="let order; columns: displayedColumns" 
+                class="example-element-row"
+                [class.example-expanded-row]="isExpanded(order)"
+                (click)="onRowClick(order)"
+                style="cursor: pointer;"></tr>
 
                 <!-- Linha de detalhe -->
                 <tr mat-row *matRowDef="let order; columns: ['detail']" [hidden]="expandedOrder !== order"></tr>
@@ -140,6 +144,4 @@
             </div>
         </div>
     </div>
-
-
 </div>
