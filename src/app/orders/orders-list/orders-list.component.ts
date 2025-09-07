@@ -10,8 +10,11 @@ import { ErrorUtils } from 'src/app/utils/error-util';
 import { OrderPageable } from '../order-pageable';
 import { MatDialog } from '@angular/material/dialog';
 import { OrdersDialogComponent } from '../orders-dialog/orders-dialog.component';
+import { OrderDetails } from '../order-details';
+import { ProductOrderDetails } from '../productOrderDetails';
+import { ProductsService } from 'src/app/products.service';
 
-declare var bootstrap: any; 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-orders-list',
@@ -24,7 +27,7 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
   orderSelected!: Order;
 
   displayedColumns: string[] = ['description', 'actions', 'edit'];
-  dataSource! : MatTableDataSource<Order>;
+  dataSource!: MatTableDataSource<Order>;
   totalLength = 0;
   pageSize = 5;
   errors!: String[];
@@ -36,28 +39,29 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
   constructor(
     private dialog: MatDialog,
     private service: OrdersService,
+    private productService: ProductsService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.loadAndReloadDataSource();   
+    this.loadAndReloadDataSource();
   }
 
   toggle(element: Order) {
     this.expandedOrder = this.isExpanded(element) ? null : element;
   }
 
-  ngAfterViewInit(): void {    
+  ngAfterViewInit(): void {
   }
 
   isExpanded(element: Order): boolean {
     return this.expandedOrder === element;
   }
 
-  loadAndReloadDataSource() { 
+  loadAndReloadDataSource() {
     this.dataSource = new MatTableDataSource<Order>([]);
     this.loadOrders(0, this.pageSize);
 
-    if(this.paginator) {
+    if (this.paginator) {
       this.paginator._changePageSize(this.paginator.pageSize);
     }
 
@@ -68,18 +72,18 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
   }
 
   loadOrders(pageIndex: number, pageSize: number): void {
-      this.service
+    this.service
       .getOrdersPageable(pageIndex, pageSize)
       .subscribe({
         next: (p) => this.processOrderPageable(p),
-        error: (e) => {this.handleError(e, "Error occurred when retrieving orders.");}, 
-        complete: () => {this.errors = []; this.showErrorModal = false}
+        error: (e) => { this.handleError(e, "Error occurred when retrieving orders."); },
+        complete: () => { this.errors = []; this.showErrorModal = false }
       });
 
   }
 
 
-  newOrder() : void {
+  newOrder(): void {
     this.router.navigate(['/orders-form']);
   }
 
@@ -89,20 +93,20 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
 
   deleteOrder(): void {
     this.service
-    .delete(this.orderSelected.id)
-    .subscribe(
-      {
-        error: (e) => {this.handleError(e, "Error occurred when deleting the order.")}, 
-        complete: () => {this.loadAndReloadDataSource()}         
-      } 
-    );
+      .delete(this.orderSelected.id)
+      .subscribe(
+        {
+          error: (e) => { this.handleError(e, "Error occurred when deleting the order.") },
+          complete: () => { this.loadAndReloadDataSource() }
+        }
+      );
   }
 
-  showModal() : void {
+  showModal(): void {
     const modelElement = document.getElementById("modalError");
     console.info(`Passei aqui: ShowModal ${this.showErrorModal}`);
 
-    if(modelElement) {
+    if (modelElement) {
       const model = new bootstrap.Modal(modelElement);
       model.show();
     }
@@ -120,26 +124,48 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
       console.info(`Order: ${order.id} - ${order.description}`);
       for (let item of order.items) {
         console.info(`Item: ${item.productId} - ${item.quantity}`);
-      } 
+      }
     }
 
-    this.dataSource = new MatTableDataSource<Order>(this.orders); 
+    this.dataSource = new MatTableDataSource<Order>(this.orders);
   }
 
   private handleError(error: HttpErrorResponse, customMessage: string) {
-    this.showErrorModal = true;    
+    this.showErrorModal = true;
     this.showModal();
     this.errors = ErrorUtils.handleError(error, customMessage);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
   onRowClick(order: Order): void {
+    let orderDetails = OrderDetails.create(order.id, order.description);
+
+    order.items.forEach(item => {
+      let ProductOrderDetails = this.getProductDetails(item.productId);
+      ProductOrderDetails.quantity = item.quantity;
+      orderDetails.products.push(ProductOrderDetails);
+    });
+
+
     this.dialog.open(OrdersDialogComponent, {
-      width: '400px',
-      data: order
-    } );
+      width: '60%',
+      data: orderDetails
+    });
   }
 
+  private getProductDetails(productId: string): ProductOrderDetails {
+    let productOrderDetails = ProductOrderDetails.create(productId, 0, '', '');
+
+    this.productService.getProductById(productId).subscribe({
+      next: (p) => {
+        productOrderDetails.name = p.name;
+        productOrderDetails.category = p.category.name;
+      },
+      error: (e) => productId = "Produto não encontrado"
+    });
+
+    return productOrderDetails;
+  }
 
 
 }
