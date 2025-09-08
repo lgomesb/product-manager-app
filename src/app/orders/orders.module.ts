@@ -11,13 +11,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { OrdersDialogComponent } from './orders-dialog/orders-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrdersFormComponent } from './orders-form/orders-form.component';
+import { AddProductOrderItemDialogComponent } from './orders-form/add-product-order-item-dialog/add-product-order-item-dialog.component';
 
 
 @NgModule({
   declarations: [
     OrdersListComponent,
     OrdersDialogComponent,
-    OrdersFormComponent
+    OrdersFormComponent,
+    AddProductOrderItemDialogComponent
   ],
   imports: [
     FormsModule,
