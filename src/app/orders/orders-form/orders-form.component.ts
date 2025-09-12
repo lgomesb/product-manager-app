@@ -9,10 +9,9 @@ import { Category } from 'src/app/categories/category';
 import { ProductsService } from 'src/app/products.service';
 import { Product } from 'src/app/products/product';
 import { ProductDTO } from 'src/app/products/productDTO';
-import { FindCategoriesDialogComponent } from 'src/app/products/products-form/find-categories-dialog/find-categories-dialog.component';
 import { StandardError } from 'src/app/standard-error';
-import { OrderDTO } from '../orderDTO';
 import { Order } from '../order';
+import { AddProductOrderItemDialogComponent } from './add-product-order-item-dialog/add-product-order-item-dialog.component';
 
 @Component({
   selector: 'app-orders-form',
@@ -87,7 +86,7 @@ export class OrdersFormComponent implements OnInit {
   }
 
   openSearchDialog() {
-    const dialogRef = this.dialog.open(FindCategoriesDialogComponent, {
+    const dialogRef = this.dialog.open(AddProductOrderItemDialogComponent, {
       width: '60%',
       data: {}
     });

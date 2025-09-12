@@ -12,6 +12,7 @@ import { OrdersDialogComponent } from './orders-dialog/orders-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrdersFormComponent } from './orders-form/orders-form.component';
 import { AddProductOrderItemDialogComponent } from './orders-form/add-product-order-item-dialog/add-product-order-item-dialog.component';
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 
 @NgModule({
@@ -27,10 +28,11 @@ import { AddProductOrderItemDialogComponent } from './orders-form/add-product-or
     OrdersRoutingModule,
     MatPaginatorModule,
     MatTableModule,
-    MatIconModule, 
+    MatIconModule,
     MatButtonModule,
-    MatDialogModule
-  ],
+    MatDialogModule,
+    MatFormFieldModule
+],
   exports: [
     OrdersListComponent
   ]

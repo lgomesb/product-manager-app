@@ -1,1 +1,47 @@
-<p>add-product-order-item-dialog works!</p>
+<div class="container">
+    <div class="modal-header">
+        <div class="row">
+            <h2 class="mt-2">Add Product Order Item</h2>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Category:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="categoryName" [ngModel]="category? category.name : ''" disabled="true" />
+                <button type="button" class="btn btn-secondary" (click)="openSearchDialog()" >
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Product:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="productName" disabled="true" />
+                <button type="button" class="btn btn-secondary">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Quantity:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="categoryName"  />
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-plus"></i> Add
+                </button>
+                <button type="button" class="btn btn-secondary ml-1">
+                    <i class="fa fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
