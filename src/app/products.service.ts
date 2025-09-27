@@ -14,6 +14,7 @@ export class ProductsService {
   
   private API_URL: String = environment.productApiURL;
   private DEFAULT_ENDPOINT: String = `${this.API_URL}/product`;
+  private CATEGORY_ENDPOINT: String = `${this.API_URL}/category`;
   
   constructor( private http: HttpClient ) { }
   
@@ -35,6 +36,10 @@ export class ProductsService {
     return this.http.get<any>(`${this.DEFAULT_ENDPOINT}/${id}`);  
   }
   
+  getProductByCategory( categoryId: String ) : Observable<ProductPageable> {
+    return this.http.get<any>(`${this.CATEGORY_ENDPOINT}/${categoryId}/products`);  
+  }
+
   getProductsPageable(page: number, pageSize: number) : Observable<ProductPageable> {
     const params = {
       page: page.toString(),
