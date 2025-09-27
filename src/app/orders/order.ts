@@ -13,6 +13,6 @@ export class Order {
     }
 
     constructor() {
-
+        this.items = [];
     }
 }
