@@ -24,15 +24,15 @@ export class OrdersService {
 
   update( id: String, order : OrderDTO ) : Observable<any> {
     console.info(order);
-    return this.http.put(`${this.DEFAULT_ENDPOINT}/${id}`, order);
+    return this.http.put(`${this.DEFAULT_ENDPOINT}${id}`, order);
   }
 
   delete( id: String ) : Observable<any> {
-    return this.http.delete<any>(`${this.DEFAULT_ENDPOINT}/${id}`);  
+    return this.http.delete<any>(`${this.DEFAULT_ENDPOINT}${id}`);  
   }
 
   getOrderById( id: String ) : Observable<any> {
-    return this.http.get<any>(`${this.DEFAULT_ENDPOINT}/${id}`);  
+    return this.http.get<any>(`${this.DEFAULT_ENDPOINT}${id}`);  
   }
   
   getOrdersPageable(page: number, pageSize: number) : Observable<OrderPageable> {
