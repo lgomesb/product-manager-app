@@ -1,19 +1,20 @@
+import { OrderItemDTO } from "./orderItemDTO";
 
 export class OrderDTO {
     public id!: string;
-    public name!: string; 
-    public idCategory!: string; 
+    public description!: string; 
+    public productId!: string; 
+    public items: OrderItemDTO[] = [];  
 
     
-    public static create(id: string, name: string, idCategory: string) : OrderDTO {
-        let product : OrderDTO = new OrderDTO();
-        product.id = id;
-        product.name = name; 
-        product.idCategory = idCategory;
-        return product;
+    public static create( description: string) : OrderDTO {
+        let order : OrderDTO = new OrderDTO();
+        order.description = description; 
+        return order;
     }
 
     constructor() {
 
     }
+
 }
