@@ -3,7 +3,7 @@
     <li class="breadcrumb-item active">{{ order.id ? 'Edit' : 'Create'}}</li>
 </ol>
 <div class="container">
-    <form #productForm="ngForm" (ngSubmit)="onSubmit()">
+    <form #orderItemForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-success" role="alert" *ngIf="success == true">
@@ -39,22 +39,22 @@
 
                             <ng-container matColumnDef="id" hidden="true">
                                 <th mat-header-cell *matHeaderCellDef> ID </th>
-                                <td mat-cell *matCellDef="let product"> {{product.id}} </td>
+                                <td mat-cell *matCellDef="let orderItem"> {{orderItem.product.id}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef> Name </th>
-                                <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+                                <td mat-cell *matCellDef="let orderItem"> {{orderItem.product.name}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="category">
                                 <th mat-header-cell *matHeaderCellDef> Category </th>
-                                <td mat-cell *matCellDef="let product"> {{product.category.name}} </td>
+                                <td mat-cell *matCellDef="let orderItem"> {{orderItem.product.category.name}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="quantity">
                                 <th mat-header-cell *matHeaderCellDef> Quantity </th>
-                                <td mat-cell *matCellDef="let product"> {{product.category.name}} </td>
+                                <td mat-cell *matCellDef="let orderItem"> {{orderItem.quantity}} </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
