@@ -41,18 +41,21 @@
 
                 <!-- Ações -->
 
-                <ng-container matColumnDef="actions">
+                <!-- <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let order">
                     <button mat-icon-button (click)="expandedOrder = expandedOrder === order ? null : order">
                         <mat-icon>{{ expandedOrder === order ? 'expand_less' : 'expand_more' }}</mat-icon>
                     </button>
                     </td>
-                </ng-container>
+                </ng-container> -->
 
                 <ng-container matColumnDef="edit" stickyEnd>
                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
                     <td mat-cell *matCellDef="let order">
+                        <button class="btn btn-link" (click)="onRowClick(order)">
+                            <i class="fa fa-eye"></i>
+                        </button>                        
                         <button class="btn btn-primary" routerLink="/orders-form/{{ order.id }}">
                             <i class="fa fa-edit"></i>
                         </button>
@@ -66,21 +69,21 @@
                 <!-- Linha de detalhes -->
                 <ng-container matColumnDef="detail">
                     <td mat-cell *matCellDef="let order" [attr.colspan]="displayedColumns.length">
-                        <div class="example-element-detail-wrapper" [class.example-element-detail-wrapper-expanded]="isExpanded(order)" *ngIf="expandedOrder === order">
-                        <table mat-table [dataSource]="order.items">
-                            <ng-container matColumnDef="id">
-                            <th mat-header-cell *matHeaderCellDef> ID Produto </th>
-                            <td mat-cell *matCellDef="let produto">{{ produto.productId }}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="quantidade">
-                            <th mat-header-cell *matHeaderCellDef> Qtd </th>
-                            <td mat-cell *matCellDef="let produto">{{ produto.quantity }}</td>
-                            </ng-container>
+                        <!-- <div class="example-element-detail-wrapper" [class.example-element-detail-wrapper-expanded]="isExpanded(order)" *ngIf="expandedOrder === order">
+                            <table mat-table [dataSource]="order.items">
+                                <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> ID Produto </th>
+                                <td mat-cell *matCellDef="let produto">{{ produto.productId }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="quantidade">
+                                <th mat-header-cell *matHeaderCellDef> Qtd </th>
+                                <td mat-cell *matCellDef="let produto">{{ produto.quantity }}</td>
+                                </ng-container>
 
-                            <tr mat-header-row *matHeaderRowDef="['id', 'quantidade']"></tr>
-                            <tr mat-row *matRowDef="let row; columns: ['id', 'quantidade']"></tr>
-                        </table>
-                        </div>
+                                <tr mat-header-row *matHeaderRowDef="['id', 'quantidade']"></tr>
+                                <tr mat-row *matRowDef="let row; columns: ['id', 'quantidade']"></tr>
+                            </table>
+                        </div> -->
                     </td>
                 </ng-container>
 
@@ -92,11 +95,12 @@
                 <tr mat-row *matRowDef="let order; columns: displayedColumns" 
                 class="example-element-row"
                 [class.example-expanded-row]="isExpanded(order)"
-                (click)="onRowClick(order)"
                 style="cursor: pointer;"></tr>
 
+                <!-- (click)="onRowClick(order)" -->
+                
                 <!-- Linha de detalhe -->
-                <tr mat-row *matRowDef="let order; columns: ['detail']" [hidden]="expandedOrder !== order"></tr>
+                <!-- <tr mat-row *matRowDef="let order; columns: ['detail']" [hidden]="expandedOrder !== order"></tr> -->
 
 
             </table>

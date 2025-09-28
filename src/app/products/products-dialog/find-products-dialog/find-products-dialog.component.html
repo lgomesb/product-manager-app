@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="modal-header">
+        <div class="row">
+            <h2 class="mt-2">Search Products</h2>
+        </div>
+    </div>
+    <div class="modal-body">
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input 
+                matInput (keyup)="applyFilter($event)" 
+                placeholder="Ex. Car" />
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" class="table table-condensed table-hover mat-elevation-z1">
+
+            <ng-container matColumnDef="id" hidden="true">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let product"> {{product.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+            </ng-container>
+
+
+            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
+            <tr mat-row (click)="onRowClicked(row)" *matRowDef="let row; columns: displayedColumns;"
+                class="example-element-row">
+            </tr>
+        </table>
+        <div class="row">
+            <div class="col-md-24">
+                <mat-paginator 
+                    [pageSizeOptions]="[5, 10, 20]" 
+                    [length]="totalLength" 
+                    [pageSize]="pageSize"
+                    showFirstLastButtons (page)="onPageChange($event)">
+                </mat-paginator>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Close</button>
+        </div>
+
+    </div>

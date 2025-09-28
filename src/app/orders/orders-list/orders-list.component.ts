@@ -26,7 +26,7 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
   orders: Order[] = [];
   orderSelected!: Order;
 
-  displayedColumns: string[] = ['description', 'actions', 'edit'];
+  displayedColumns: string[] = ['description', 'edit'];
   dataSource!: MatTableDataSource<Order>;
   totalLength = 0;
   pageSize = 5;
@@ -147,10 +147,11 @@ export class OrdersListComponent implements AfterViewInit, OnInit {
     });
 
 
-    this.dialog.open(OrdersDialogComponent, {
+    let productOrderDialog = this.dialog.open(OrdersDialogComponent, {
       width: '60%',
       data: orderDetails
     });
+
   }
 
   private getProductDetails(productId: string): ProductOrderDetails {

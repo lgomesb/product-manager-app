@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { FindCategoriesDialogComponent } from './products-form/find-categories-dialog/find-categories-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FindProductsDialogComponent } from './products-dialog/find-products-dialog/find-products-dialog.component';
 
 
 
@@ -17,7 +18,8 @@ import { MatInputModule } from '@angular/material/input';
   declarations: [
     ProductsFormComponent,
     ProductsListComponent,
-    FindCategoriesDialogComponent
+    FindCategoriesDialogComponent,
+    FindProductsDialogComponent
   ],
   imports: [
     FormsModule,
