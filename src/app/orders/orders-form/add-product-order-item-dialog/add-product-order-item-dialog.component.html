@@ -8,8 +8,9 @@
         <div class="form-group">
             <label>Category:</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="categoryName" [ngModel]="category? category.name : ''" disabled="true" />
-                <button type="button" class="btn btn-secondary" (click)="openSearchDialog()" >
+                <input type="text" class="form-control" name="categoryName" [ngModel]="category? category.name : ''"
+                    disabled="true" />
+                <button type="button" class="btn btn-secondary" (click)="openCategoriesSearchDialog()">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -17,8 +18,9 @@
         <div class="form-group">
             <label>Product:</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="productName" disabled="true" />
-                <button type="button" class="btn btn-secondary">
+                <input type="text" class="form-control" name="productName" [ngModel]="product? product.name : ''"
+                    disabled="true" />
+                <button type="button" class="btn btn-secondary" (click)="openProductsSearchDialog()" [disabled]="!category">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -26,21 +28,22 @@
 
         <div class="form-group">
             <label>Quantity:</label>
-            <div class="input-group">
-                <input type="text" class="form-control" name="categoryName"  />
-
+            <div class="input-group" style="width: 150px;">
+                <input type="number" class="form-control" name="categoryName" [(ngModel)]="quantity" min="1"
+                    (input)="onInputChange()" (keydown)="blockNegative($event)" (blur)="onInputChange()" />
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-success">
+                <button type="submit" class="btn btn-success" (click)="onAddClicked()">
                     <i class="fa fa-plus"></i> Add
                 </button>
-                <button type="button" class="btn btn-secondary ml-1">
+                <!-- <button type="button" class="btn btn-secondary ml-1">
                     <i class="fa fa-times"></i> Cancel
-                </button>
+                </button> -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Cancel</button>
             </div>
         </div>
     </div>
